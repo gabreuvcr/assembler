@@ -39,6 +39,7 @@ std::vector<std::string> get_input(const std::string& file_name) {
         std::stringstream ss(line);
         std::string command;
         while(getline(ss, command, ' ')) {
+            if(command[0] == ';') continue;
             inputs.push_back(command);
         }
 	}
