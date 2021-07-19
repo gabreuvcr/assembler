@@ -95,8 +95,10 @@ int main(int argc, char *argv[]) {
 		output.push_back(std::to_string(table[commands[i]]));
     }
 
+    std::cout << "MV-EXE" << std::endl << std::endl;
+
 	int memory = output.size();
-	std::cout << memory << std::endl;
+	std::cout << memory << std::endl << std::endl;
 	for (int i = 0; i < memory; i++) {
 		std::cout << output[i];
 		if (i != memory - 1) {
