@@ -71,7 +71,7 @@ int main(int argc, char *argv[]) {
 		// Lendo label
 		if (commands[i][end_string] == ':') {
 			table[commands[i].substr(0, end_string)] = ++num_lines;
-			// Caso ap�s a label seja opera��o, conta a linha na pr�xima leitura
+			// Caso apos a label seja operacao, conta a linha na proxima leitura
 			if (is_op(commands[i + 1])) num_lines--;
 
 			continue;
@@ -98,7 +98,7 @@ int main(int argc, char *argv[]) {
     std::cout << "MV-EXE" << std::endl << std::endl;
 
 	int memory = output.size();
-	std::cout << memory << std::endl << std::endl;
+	std::cout << memory << " 100 999 100" << std::endl << std::endl;
 	for (int i = 0; i < memory; i++) {
 		std::cout << output[i];
 		if (i != memory - 1) {
