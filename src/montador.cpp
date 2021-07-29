@@ -1,5 +1,9 @@
 #include "montador.h"
 
+void remove_tabs(std::string &in) {
+    in.erase(std::remove(in.begin(), in.end(), '\t'), in.end());
+}
+
 std::vector<std::string> get_input(const std::string& file_name) {
 	std::ifstream f;
     f.open(file_name);
@@ -12,6 +16,7 @@ std::vector<std::string> get_input(const std::string& file_name) {
         std::string command;
         while(getline(ss, command, ' ')) {
             if(command.size() == 0) continue;
+            remove_tabs(command);
             if(command[0] == ';') break;
             inputs.push_back(command);
         }
