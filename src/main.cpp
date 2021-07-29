@@ -18,11 +18,13 @@ int main(int argc, char *argv[]) {
         {"R0", 0}, {"R1", 1}, {"R2", 2}, {"R3", 3}
     };
 
+    std::map<std::string, int> labels = {};
+
     std::vector<std::string> commands = get_input(argv[1]);
 
-    first_pass(table, commands);
+    first_pass(table, labels, commands);
 
-	std::vector<std::string> output = second_pass(table, commands);
+	std::vector<std::string> output = second_pass(table, labels, commands);
 
     print_output(output);
 
