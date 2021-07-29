@@ -64,16 +64,13 @@ std::vector<std::string> second_pass(std::map<std::string, int> table, std::map<
         if (is_word_op(commands[i])) {
             output.push_back(commands[i + 1]);
         }
-        if (labels.count(commands[i]) == 1) {
+        else if (labels.count(commands[i]) == 1) {
             output.push_back(std::to_string(labels[commands[i]] - ILC - 1));
-            continue;
         }
-        if(table.count(commands[i]) == 0) {
-            continue;
+        else if(table.count(commands[i]) == 1) {
+            output.push_back(std::to_string(table[commands[i]]));
         }
-        output.push_back(std::to_string(table[commands[i]]));
     }
-    
     return output;
 }
 
