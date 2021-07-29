@@ -47,9 +47,9 @@ void first_pass(std::map<std::string, int> &table, std::map<std::string, int> &l
 			labels[commands[i].substr(0, end_string)] = ILC;
             // Apagando label da entrada de comandos
             commands.erase(commands.begin() + i);
+            if (i == size - 1) break;
             ILC--;
             i--;
-			continue;
 		}
     }
 }
