@@ -11,6 +11,7 @@ std::vector<std::string> get_input(const std::string& file_name) {
         std::stringstream ss(line);
         std::string command;
         while(getline(ss, command, ' ')) {
+            if(command.size() == 0) continue;
             if(command[0] == ';') break;
             inputs.push_back(command);
         }
@@ -48,6 +49,9 @@ void first_pass(std::map<std::string, int> &table, std::vector<std::string> &com
 		// Lendo label
 		if (is_label(commands[i])) {
 			table[commands[i].substr(0, end_string)] = num_lines + 1;
+            // Apagando label da entrada de comandos
+            commands.erase(commands.begin() + i);
+            i--;
 			continue;
 		}
 
@@ -66,7 +70,7 @@ std::vector<std::string> second_pass(std::map<std::string, int> table, std::vect
         if (is_word_op(commands[i])) {
             output.push_back(commands[i + 1]);
         }
-        if (table.find(commands[i]) == table.end()) {
+        if(table.count(commands[i]) == 0) {
             continue;
         }
         output.push_back(std::to_string(table[commands[i]]));

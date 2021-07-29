@@ -1,0 +1,33 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                      MULTIPLICACAO                       ;;
+;; Lê dois números e faz a multiplicacao força bruta        ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+        READ    R0		; Lê o primeiro número, será o limitador de iteracoes
+        READ    R1		; Lê o primeiro número e armazena no registrador
+;serão verificados numeros negativos, se for positivo, pula para inicio do multiplicador
+	COPY	R7	R0	; Copia para atualizar PEP
+	JNN	START		; Se R0 é negativo, mudará o sinal de R1, e o proprio
+	SUB	R2	R0	; Inverte sinal de R0
+	SUB	R3	R1	; Inverte sinal de R1
+	COPY	R0	R2	; Copia de volta
+	COPY	R1	R3	; Copia de volta
+
+;Inicia iteracao de multiplicacao
+;R4 armazena o contador de iteracoes, Inicia com zero
+START:	LOAD	R2	N1	;Coloca o valor 1 em R2, para incrementar o contador
+	COPY	R5	R4	;Armazena temporariamente o contador de iteracoes
+	SUB	R5	R0	;Compara contador de iteracoes
+	JNZ	MULT		;SE o contador não for igual, pula a escrita e o fim do programa
+	WRITE	R6		;Total sera armazenado em R6, iniciado com zero
+	HALT
+MULT:	ADD	R6	R1	;Incrementa total pelo valor de R1
+	ADD	R4	R2	;incrementa o contador de iteracoes
+	JUMP	START
+	HALT
+N1:	WORD	1
+	END
+
+
+
+

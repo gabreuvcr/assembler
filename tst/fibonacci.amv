@@ -1,0 +1,38 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                       FIBONACCI                          ;;
+;; Lê um número N e imprime o N-ésimo número da sequência   ;;
+;; de Fibonacci                                             ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+        READ    R6		; Lê um número e armazena no registrador
+	COPY	R7	R6	; Copia para atualizar PEP
+	JNN	START		; Se é negativo, encerra o programa
+	JNZ	START		; Se é zero, encerra o programa
+	HALT
+;Carrega para os registradores os primeiros numeros
+START:	LOAD	R0	N0	;Carrega primeiro numero
+	LOAD	R1	N1	;Carrega o segundo numero
+	LOAD	R4	N1	;R4 armazenará sempre 1, para incrementar o contador de iterações
+	LOAD	R6	N1	;R6 será o contador de iterações, começa com 1
+	COPY	R5	R6	;Copia o contador de iterações para R5
+	SUB	R6	R7	;Verifica se pediu numero 1
+	JNZ	IT		;Se não foi 0, pula para proxima iteracao
+	WRITE	R0		;Iteração 1
+	HALT
+IT:	COPY	R6	R5	;Devolve valor salvo do contador de iterações
+	COPY	R2	R1	;Salva valor do maior numero, R1, em R2
+	ADD	R1	R0	;Soma os valores de Fibonacci
+	COPY	R0	R2	;Copia o antigo maior valor, para a menor posicao
+	ADD	R6	R4	;Incrementa o contador de iterações
+	COPY	R5	R6	;Copia o contador de iterações para R5
+	SUB	R6	R7	;Verifica se é o numero desejado de iterações
+	JNZ	IT		;reinicia iteracao se a subtracao nao resultar em zero
+	WRITE	R0		;Imprime valor
+	HALT
+N0:	WORD	0
+N1:	WORD	1
+	END
+
+
+
+

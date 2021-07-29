@@ -1,0 +1,149 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                       MEDIANA                            ;;
+;; Lê 7 números e imprime a mediana deles.                  ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+        READ    R0; Lê um número e armazena no registrador
+        READ    R1; Lê um número e armazena no registrador
+        READ    R2; Lê um número e armazena no registrador
+        READ    R3; Lê um número e armazena no registrador
+        READ    R4; Lê um número e armazena no registrador
+        READ    R5; Lê um número e armazena no registrador
+        READ    R6; Lê um número e armazena no registrador
+;ordenar os numeros
+;R0 - Compara o primeiro número com todos os outros
+        COPY    R7  R0  ; armazena numero comparado no reg extra
+        SUB     R0  R1  ; subtrai para ver qual maior
+        JN      MENOR01	; se negativo, R0<R1 pula. Se positivo, R0>R1 troca
+        COPY    R0  R1  ; R0>R1, troca posicao
+        COPY    R1  R7  ;
+        JUMP    R0R2	;
+MENOR01:COPY    R0  R7  ; R0<R1, volta o valor de R0
+R0R2:	COPY    R7  R0  ; armazena numero comparado no reg extra
+        SUB     R0  R2  ; subtrai para ver qual maior
+        JN      MENOR02	; se negativo, R0<R2 pula. Se positivo, R0>R2 troca
+        COPY    R0  R2  ; R0>R2, troca posicao
+        COPY    R2  R7  ;
+        JUMP    R0R3	;
+MENOR02:COPY    R0  R7  ; R0<R2, volta o valor de R0
+R0R3:	COPY    R7  R0  ; armazena numero comparado no reg extra
+        SUB     R0  R3  ; subtrai para ver qual maior
+        JN      MENOR03	; se negativo, R0<R3 pula. Se positivo, R0>R3 troca
+        COPY    R0  R3  ; R0>R3, troca posicao
+        COPY    R3  R7  ;
+        JUMP    R0R4	;
+MENOR03:COPY    R0  R7  ; R0<R3, volta o valor de R0
+R0R4:	COPY    R7  R0  ; armazena numero comparado no reg extra
+        SUB     R0  R4  ; subtrai para ver qual maior
+        JN      MENOR04	; se negativo, R0<R4 pula. Se positivo, R0>R4 troca
+        COPY    R0  R4  ; R0>R4, troca posicao
+        COPY    R4  R7  ;
+        JUMP    R0R5	;
+MENOR04:COPY    R0  R7  ; R0<R4, volta o valor de R0
+R0R5:	COPY    R7  R0  ; armazena numero comparado no reg extra
+        SUB     R0  R5  ; subtrai para ver qual maior
+        JN      MENOR05	; se negativo, R0<R5 pula. Se positivo, R0>R5 troca
+        COPY    R0  R5  ; R0>R5, troca posicao
+        COPY    R5  R7  ;
+        JUMP    R0R6	;
+MENOR05:COPY    R0  R7  ; R0<R5, volta o valor de R0
+R0R6:	COPY    R7  R0  ; armazena numero comparado no reg extra
+        SUB     R0  R6  ; subtrai para ver qual maior
+        JN      MENOR06	; se negativo, R0<R6 pula. Se positivo, R0>R6 troca
+        COPY    R0  R6  ; R0>R6, troca posicao
+        COPY    R6  R7  ;
+        JUMP    R1R2	;
+MENOR06:COPY    R0  R7  ; R0<R6, volta o valor de R0
+
+;R1 - Compara segundo numero com todos os outros
+R1R2:	COPY    R7  R1  ; armazena numero comparado no reg extra
+        SUB     R1  R2  ; subtrai para ver qual maior
+        JN      MENOR12	; se negativo, R1<R2 pula. Se positivo, R1>R2 troca
+        COPY    R1  R2  ; R1>R2, troca posicao
+        COPY    R2  R7  ;
+        JUMP    R1R3	;
+MENOR12:COPY    R1  R7  ; R1<R2, volta o valor de R1
+R1R3:	COPY    R7  R1  ; armazena numero comparado no reg extra
+        SUB     R1  R3  ; subtrai para ver qual maior
+        JN      MENOR13	; se negativo, R1<R3 pula. Se positivo, R1>R3 troca
+        COPY    R1  R3  ; R1>R3, troca posicao
+        COPY    R3  R7  ;
+        JUMP    R1R4	;
+MENOR13:COPY    R1  R7  ; R1<R3, volta o valor de R1
+R1R4:	COPY    R7  R1  ; armazena numero comparado no reg extra
+        SUB     R1  R4  ; subtrai para ver qual maior
+        JN      MENOR14	; se negativo, R1<R4 pula. Se positivo, R1>R4 troca
+        COPY    R1  R4  ; R1>R4, troca posicao
+        COPY    R4  R7  ;
+        JUMP    R1R5	;
+MENOR14:COPY    R1  R7  ; R1<R4, volta o valor de R1
+R1R5:	COPY    R7  R1  ; armazena numero comparado no reg extra
+        SUB     R1  R5  ; subtrai para ver qual maior
+        JN      MENOR15	; se negativo, R1<R5 pula. Se positivo, R1>R5 troca
+        COPY    R1  R5  ; R1>R5, troca posicao
+        COPY    R5  R7  ;
+        JUMP    R1R6	;
+MENOR15:COPY    R1  R7  ; R1<R5, volta o valor de R1
+R1R6:	COPY    R7  R1  ; armazena numero comparado no reg extra
+        SUB     R1  R6  ; subtrai para ver qual maior
+        JN      MENOR16	; se negativo, R1<R6 pula. Se positivo, R1>R6 troca
+        COPY    R1  R6  ; R1>R6, troca posicao
+        COPY    R6  R7  ;
+        JUMP    R2R3	;
+MENOR16:COPY    R1  R7  ; R1<R6, volta o valor de R1
+
+;R2 - Compara terceiro numero com todos os proximos
+R2R3:	COPY    R7  R2  ; armazena numero comparado no reg extra
+        SUB     R2  R3  ; subtrai para ver qual maior
+        JN      MENOR23	; se negativo, R2<R3 pula. Se positivo, R2>R3 troca
+        COPY    R2  R3  ; R2>R3, troca posicao
+        COPY    R3  R7  ;
+        JUMP    R2R4	;
+MENOR23:COPY    R2  R7  ; R2<R3, volta o valor de R2
+R2R4:	COPY    R7  R2  ; armazena numero comparado no reg extra
+        SUB     R2  R4  ; subtrai para ver qual maior
+        JN      MENOR24	; se negativo, R2<R4 pula. Se positivo, R2>R4 troca
+        COPY    R2  R4  ; R2>R4, troca posicao
+        COPY    R4  R7  ;
+        JUMP    R2R5	;
+MENOR24:COPY    R2  R7  ; R2<R4, volta o valor de R2
+R2R5:	COPY    R7  R2  ; armazena numero comparado no reg extra
+        SUB     R2  R5  ; subtrai para ver qual maior
+        JN      MENOR25	; se negativo, R2<R5 pula. Se positivo, R2>R5 troca
+        COPY    R2  R5  ; R2>R5, troca posicao
+        COPY    R5  R7  ;
+        JUMP    R2R6	;
+MENOR25:COPY    R2  R7  ; R2<R5, volta o valor de R2
+R2R6:	COPY    R7  R2  ; armazena numero comparado no reg extra
+        SUB     R2  R6  ; subtrai para ver qual maior
+        JN      MENOR26	; se negativo, R2<R6 pula. Se positivo, R2>R6 troca
+        COPY    R2  R6  ; R2>R6, troca posicao
+        COPY    R6  R7  ;
+        JUMP    R3R4	;
+MENOR26:COPY    R2  R7  ; R2<R6, volta o valor de R2
+
+;R3 - Compara quarto numero com todos os proximos
+R3R4:	COPY    R7  R3  ; armazena numero comparado no reg extra
+        SUB     R3  R4  ; subtrai para ver qual maior
+        JN      MENOR34	; se negativo, R3<R4 pula. Se positivo, R3>R4 troca
+        COPY    R3  R4  ; R3>R4, troca posicao
+        COPY    R4  R7  ;
+        JUMP    R3R5	;
+MENOR34:COPY    R3  R7  ; R3<R4, volta o valor de R3
+R3R5:	COPY    R7  R3  ; armazena numero comparado no reg extra
+        SUB     R3  R5  ; subtrai para ver qual maior
+        JN      MENOR35	; se negativo, R3<R5 pula. Se positivo, R3>R5 troca
+        COPY    R3  R5  ; R3>R5, troca posicao
+        COPY    R5  R7  ;
+        JUMP    R3R6	;
+MENOR35:COPY    R3  R7  ; R3<R5, volta o valor de R3
+R3R6:	COPY    R7  R3  ; armazena numero comparado no reg extra
+        SUB     R3  R6  ; subtrai para ver qual maior
+        JN      MENOR36	; se negativo, R3<R6 pula. Se positivo, R3>R6 troca
+        COPY    R3  R6  ; R3>R6, troca posicao
+        COPY    R6  R7  ;
+        JUMP    FIM	;
+MENOR36:COPY    R3  R7  ; R3<R6, volta o valor de R3
+FIM:	WRITE	R3	; Escreve mediana
+	HALT
+	END

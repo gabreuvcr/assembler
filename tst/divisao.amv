@@ -1,0 +1,34 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                        DIVISÃO                           ;;
+;; Lê dois números e divide o primeiro pelo segundo, impri- ;;
+;; mindo o quociente e o resto da divisão.                  ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+		READ    R0		; Lê o primeiro número
+		READ    R1		; Lê o primeiro número e armazena no registrador
+;serão verificados numeros negativos, nenhum pode ser negativo
+		COPY	R7	R0	; Copia para atualizar PEP
+		JNN		TESTR1	; Se R0 é negativo, encerra
+		HALT
+TESTR1:	COPY	R7	R1	; Copia para atualizar PEP
+		JNN		START		; Se R1 é negativo, encerra
+		SUB		R3	R1	; Inverte sinal de R1
+
+;Inicia iteracao de divisao, nenhum dos dois é negativo
+;R4 terá o quociente
+START:	LOAD	R7	N1	; Carrega para a memoria o numero 1
+IT:		SUB		R0	R1	; Subtrai uma vez o dividendo do divisor
+		JN		FINAL	; Fim da divisao, escreve valor
+		ADD		R4	R7	; Incrementa o quociente por 1
+		JUMP	IT		; retorna à subtracao
+
+FINAL:	ADD		R0	R1	; Soma uma vez para obter o resto
+		WRITE	R4		; Escreve quociente
+		WRITE	R0		; Escreve resto
+		HALT
+
+N1:		WORD	1
+		FIM
+
+
+

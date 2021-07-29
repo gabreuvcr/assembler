@@ -1,0 +1,32 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;               TESTE REMANECENTE DO MONTADOR              ;;
+;; Verifica o funcionamento das instruções AND, OR, XOR,    ;;
+;; NOT, JZ, PUSH, POP, CALL, RET                            ;;
+;; Le dois numeros do usuário, se eles forem iguais, imprime;;
+;; esse numero negado, se forem diferentes, imprime as ope- ;;
+;; rações AND, OR e XOR desses dois números. Para testar as ;;
+;; demais funções, algumas das funcionalidades estarão após ;;
+;; a rotina.                                                ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+        READ    R0      ;Lê um número
+        READ    R1      ;Lê outro número
+        PUSH    R0      ;Salva na pilha para testar seu funcionamento
+        SUB     R0  R1  ;Verifica se os numeros sao iguais
+        JZ      IGUAIS  ;Se os numeros forem iguais, escreve a funcao NOT
+;diferentes, escreve as operacoes and, or e xor
+        POP     R0      ;Volta com o valor do primeiro numero digitado -
+        CALL    AOX     ;chama função and, or, xor
+        JUMP    FIM
+IGUAIS: NOT     R1      ;Inverte o numero
+FIM:    WRITE   R1      ;Imprime resultado
+        HALT
+AOX:    COPY    R2  R0  ;Copia para registrador
+        AND     R0  R1  ;realiza op AND
+        WRITE   R0      ;imprime result AND
+        COPY    R0  R2  ;volta com o valor de R0
+        OR      R0  R1  ;realiza op OR
+        WRITE   R0      ;imprime resultado OR
+        COPY    R0  R2  ;Volta com o valor de R0
+        XOR     R1  R0  ;realiza op XOR
+        RET
