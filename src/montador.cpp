@@ -1,7 +1,7 @@
 #include "montador.h"
 
-void remove_tabs(std::string &in) {
-    in.erase(std::remove(in.begin(), in.end(), '\t'), in.end());
+void replace_tabs_to_spaces(std::string &in) {
+    std::replace(std::begin(in), std::end(in), '\t', ' ');
 }
 
 std::vector<std::string> get_input(const std::string& file_name) {
@@ -12,11 +12,11 @@ std::vector<std::string> get_input(const std::string& file_name) {
 	std::string line;
 	while (std::getline(f, line)) {
         if (line == "END") break;
+        replace_tabs_to_spaces(line);
         std::stringstream ss(line);
         std::string command;
         while(getline(ss, command, ' ')) {
             if(command.size() == 0) continue;
-            remove_tabs(command);
             if(command[0] == ';') break;
             inputs.push_back(command);
         }
