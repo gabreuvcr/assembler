@@ -1,38 +1,60 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                       FIBONACCI                          ;;
-;; Lê um número N e imprime o N-ésimo número da sequência   ;;
-;; de Fibonacci                                             ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Cálculo do valor de Fibonacci
+; Entrada: Natural diferente de 0 N (via input)
+; Saída: Valor de Fibonacci (registrador X)
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-        READ    R6		; Lê um número e armazena no registrador
-	COPY	R7	R6	; Copia para atualizar PEP
-	JNN	START		; Se é negativo, encerra o programa
-	JNZ	START		; Se é zero, encerra o programa
-	HALT
-;Carrega para os registradores os primeiros numeros
-START:	LOAD	R0	N0	;Carrega primeiro numero
-	LOAD	R1	N1	;Carrega o segundo numero
-	LOAD	R4	N1	;R4 armazenará sempre 1, para incrementar o contador de iterações
-	LOAD	R6	N1	;R6 será o contador de iterações, começa com 1
-	COPY	R5	R6	;Copia o contador de iterações para R5
-	SUB	R6	R7	;Verifica se pediu numero 1
-	JNZ	IT		;Se não foi 0, pula para proxima iteracao
-	WRITE	R0		;Iteração 1
-	HALT
-IT:	COPY	R6	R5	;Devolve valor salvo do contador de iterações
-	COPY	R2	R1	;Salva valor do maior numero, R1, em R2
-	ADD	R1	R0	;Soma os valores de Fibonacci
-	COPY	R0	R2	;Copia o antigo maior valor, para a menor posicao
-	ADD	R6	R4	;Incrementa o contador de iterações
-	COPY	R5	R6	;Copia o contador de iterações para R5
-	SUB	R6	R7	;Verifica se é o numero desejado de iterações
-	JNZ	IT		;reinicia iteracao se a subtracao nao resultar em zero
-	WRITE	R0		;Imprime valor
-	HALT
-N0:	WORD	0
-N1:	WORD	1
-	END
+; R0 armazena o valor da entrada
+; R3 (e em dado momento R1) sao registradores livres
 
+READ R1                               ; entrada N
+COPY R0 R1                            ; atualiza estado com a entrada
 
+JN exit_error                         ; encerra o programa se entrada negativa
+JZ exit_error                         ; encerra o programa se entrada = zero
 
+JUMP start
 
+start:
+LOAD R1 fib1                          ; carrega caso base 1
+LOAD R2 fib2                          ; carrega caso base 2
+LOAD R3 one                           
+STORE R3 counter                      ; contador comeca do 1
+SUB R3 R0                             ; verifica se cai no case base 1
+JN iterations                         ; se nao, comeca a iterar
+JUMP exit_success                     ; se sim, encerra o programa
+
+iterations:
+LOAD R3 counter                       ; carrega em R3 o valore do contador
+STORE R2 greater                      ; guarda o maior valor encontrado (fib)
+ADD R2 R1                             ; calcula o proximo fib
+LOAD R1 one                        
+ADD R3 R1                             ; incrementa o contador
+STORE R3 counter
+LOAD R1 greater
+SUB R3 R0                             ; verifica se ja fez todas as iteracoes (sub = 0)
+JN iterations                         ; se nao, retorna
+JUMP exit_success                     ; se sim, encerra
+
+exit_error:
+HALT
+
+exit_success:
+LOAD R3 greater                       ; o maior valor e o fib
+WRITE R3
+HALT
+
+fib1: WORD 0                          ; valor do caso base 1
+fib2: WORD 1                          ; valor do caso base 2
+one: WORD 1
+
+counter: WORD 0
+greater: WORD 0
+
+END

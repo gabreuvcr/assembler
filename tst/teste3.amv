@@ -1,0 +1,5 @@
+LOAD R0 label2
+HALT
+label1: WORD 1
+label2: WORD 2
+END

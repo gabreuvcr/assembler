@@ -34,24 +34,38 @@ bool is_label(std::string command) {
     return command[end_string] == ':';
 }
 
-void first_pass(std::map<std::string, int> &table, std::map<std::string, int> &labels, std::vector<std::string> &commands) {
+int first_pass(std::map<std::string, int> &table, std::map<std::string, int> &labels, std::vector<std::string> &commands) {
     int size = commands.size();
     int ILC = 0;
+    int leading_words = 0;
+    bool flag = false;
 
     for (int i = 0; i < size; i++) {
         ILC++;
-		int end_string = commands[i].size() - 1;
+        std::string command = commands[i];
+		int end_string = command.size() - 1;
 
 		// Lendo label
-		if (is_label(commands[i])) {
-			labels[commands[i].substr(0, end_string)] = ILC;
+		if (is_label(command)) {
+			labels[command.substr(0, end_string)] = ILC;
             // Apagando label da entrada de comandos
             commands.erase(commands.begin() + i);
             if (i == size - 1) break;
             ILC--;
             i--;
 		}
+        // Descobrindo words no início do programa:
+        else if(!flag && is_word_op(command)) {
+            leading_words++;
+            ILC--;
+        }
+        else {
+            flag = true;
+            if(is_word_op(command)) ILC--;
+        }
     }
+
+    return leading_words;
 }
 
 std::vector<std::string> second_pass(std::map<std::string, int> table, std::map<std::string, int> labels, std::vector<std::string> commands) {
@@ -63,6 +77,7 @@ std::vector<std::string> second_pass(std::map<std::string, int> table, std::map<
         ILC++;
         if (is_word_op(commands[i])) {
             output.push_back(commands[i + 1]);
+            ILC--;
         }
         else if (labels.count(commands[i]) == 1) {
             output.push_back(std::to_string(labels[commands[i]] - ILC - 1));
@@ -74,11 +89,17 @@ std::vector<std::string> second_pass(std::map<std::string, int> table, std::map<
     return output;
 }
 
-void print_output(std::vector<std::string> output) {
+void print_output(std::vector<std::string> output, const int &offset) {
     std::cout << "MV-EXE" << std::endl << std::endl;
 
 	int memory = output.size();
-	std::cout << memory << " 100 999 100" << std::endl << std::endl;
+    int program_start = 100;
+    int stack_start = 1000 + program_start + memory;
+    int entry_point = program_start + offset;
+    std::cout << memory;
+    std::cout << " " << program_start;
+    std::cout << " " << stack_start;
+    std::cout << " " << entry_point << std::endl << std::endl;
 	for (int i = 0; i < memory; i++) {
 		std::cout << output[i];
 		if (i != memory - 1) {

@@ -22,11 +22,11 @@ int main(int argc, char *argv[]) {
 
     std::vector<std::string> commands = get_input(argv[1]);
 
-    first_pass(table, labels, commands);
+    int offset = first_pass(table, labels, commands);
 
 	std::vector<std::string> output = second_pass(table, labels, commands);
 
-    print_output(output);
+    print_output(output, offset);
 
     return 0;
 }
