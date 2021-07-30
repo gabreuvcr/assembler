@@ -1,0 +1,59 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Cálculo do valor de Fibonacci
+; Entrada: Natural diferente de 0 N (via input)
+; Saída: Valor de Fibonacci (registrador X)
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; R0 armazena o valor da entrada
+; R3 (e em dado momento R1) sao registradores livres
+
+fib1: WORD 0                          ; valor do caso base 1
+fib2: WORD 1                          ; valor do caso base 2
+one: WORD 1
+
+counter: WORD 0
+greater: WORD 0
+
+READ R1                               ; entrada N
+COPY R0 R1                            ; atualiza estado com a entrada
+
+JN exit_error                         ; encerra o programa se entrada negativa
+JZ exit_error                         ; encerra o programa se entrada = zero
+
+JUMP start
+
+start:
+LOAD R1 fib1                          ; carrega caso base 1
+LOAD R2 fib2                          ; carrega caso base 2
+LOAD R3 one                           
+STORE R3 counter                      ; contador comeca do 1
+SUB R3 R0                             ; verifica se cai no case base 1
+JN iterations                         ; se nao, comeca a iterar
+JUMP exit_success                     ; se sim, encerra o programa
+
+iterations:
+LOAD R3 counter                       ; carrega em R3 o valore do contador
+STORE R2 greater                      ; guarda o maior valor encontrado (fib)
+ADD R2 R1                             ; calcula o proximo fib
+LOAD R1 one                        
+ADD R3 R1                             ; incrementa o contador
+STORE R3 counter
+LOAD R1 greater
+SUB R3 R0                             ; verifica se ja fez todas as iteracoes (sub = 0)
+JN iterations                         ; se nao, retorna
+JUMP exit_success                     ; se sim, encerra
+
+exit_error:
+HALT
+
+exit_success:
+LOAD R3 greater                       ; o maior valor e o fib
+WRITE R3
+HALT
+END
