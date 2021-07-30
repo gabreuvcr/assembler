@@ -55,14 +55,15 @@ int first_pass(std::map<std::string, int> &table, std::map<std::string, int> &la
             i--;
 		}
         // Descobrindo words no início do programa:
+        if(!flag && table.count(command) > 0) {
+            flag = true;
+        }
         else if(!flag && is_word_op(command)) {
             leading_words++;
             ILC--;
         }
-        else {
-            flag = true;
-            if(is_word_op(command)) ILC--;
-        }
+        // Detectando words no meio:
+        else if(is_word_op(command)) ILC--;
     }
 
     return leading_words;
